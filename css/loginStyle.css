@@ -1,0 +1,35 @@
+body {
+    background: linear-gradient(rgb(121, 192, 240), white);
+}
+
+.loginPanel {
+    border-radius: 3px;
+    display: flex; /* 要素を横並びにする */
+    flex-direction: column; /* 要素を縦並びにする */
+    justify-content: center; /* 縦方向（列方向）に中央寄せ */
+    align-items: center; /* 横方向（行方向）に中央寄せ */
+    height: 85vh; /* 画面の高さいっぱいに設定 */
+    background: transparent; /* 背景を透明に設定 */
+
+    border: ridge 5px rgb(83, 81, 87); 
+    background-color: aliceblue;
+    width: 300px; /* 四角の幅を300pxに設定 */
+    height: 200px; /* 四角の高さを200pxに設定 */
+    margin: 0 auto;
+}
+
+.signinPanel {
+    border-radius: 3px;
+    display: flex; /* 要素を横並びにする */
+    flex-direction: column; /* 要素を縦並びにする */
+    justify-content: center; /* 縦方向（列方向）に中央寄せ */
+    align-items: center; /* 横方向（行方向）に中央寄せ */
+    height: 85vh; /* 画面の高さいっぱいに設定 */
+    background: transparent; /* 背景を透明に設定 */
+
+    border: ridge 5px rgb(51, 0, 0); 
+    background-color: rgb(255, 255, 255);
+    width: 300px; /* 四角の幅を300pxに設定 */
+    height: 200px; /* 四角の高さを200pxに設定 */
+    margin: 0 auto;
+}
