@@ -15,23 +15,23 @@ class user {
 
 if(isset($_POST['login'])){
     $userName = trim($_POST['userName']);
-    $userPassword = trim($_POST['userPassword']);
+    $userPassword = trim($_POST['userPassword']); // ハッシュ化前のパスワードを取得
+
     try{
         $pdo = new PDO('mysql:host=localhost;dbname=sample', "root", "");
-        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `userName` = :userName AND `password` = :userPassword");
+        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `userName` = :userName");
         $stmt->bindParam(':userName', $userName, PDO::PARAM_STR);
-        $stmt->bindParam(':userPassword', $userPassword, PDO::PARAM_STR);
         $stmt-> execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($user){
+
+        if($user && password_verify($userPassword, $user['password'])){ // パスワードを検証する
             $_SESSION['userName'] = $userName;
             
             // ユーザーのIDをセッションに追加
             $_SESSION['userID'] = $user['id'];
-            echo(
-                "Hello ". $_SESSION['userName']."<br>WELCOME!!"
-            );
+            echo "Hello ". $_SESSION['userName']."<br>WELCOME!!";
             header("Location:Home.php");
+            exit();
         }else{
             echo "ユーザー名またはパスワードが間違っています。";
         }
@@ -39,9 +39,9 @@ if(isset($_POST['login'])){
         $pdo = null;
     }catch(PDOException $e){
         echo $e->getMessage();
-        
     }
 }
+
 
 ?>
 

@@ -3,7 +3,7 @@
     
     if(isset($_POST['signin'])){
         $userName = trim($_POST['userName']);
-        $userPassword = trim($_POST['userPassword']);
+        $userPassword = password_hash(trim($_POST['userPassword']), PASSWORD_DEFAULT);
         try{
             $pdo = new PDO('mysql:host=localhost;dbname=sample', "root", "");
             $stmt = $pdo->prepare("INSERT INTO `users` (`userName`, `password`) VALUES (:userName, :userPassword)");

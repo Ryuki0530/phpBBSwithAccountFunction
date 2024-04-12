@@ -43,7 +43,7 @@ body {
   }
   
   .success_message {
-    color: green;
+    color: rgb(0, 0, 0);
     padding-left: 10px;
   }
   
