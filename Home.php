@@ -7,9 +7,10 @@ $pdo = null;
 $stmt = null;
 $check = 0;
 
+require_once 'Settings.php';
 //DB接続
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=bbsd', "root", "");
+    $pdo = new PDO('mysql:host='.$db_host.';dbname='.$db_name, $db_user, $db_pass);
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
@@ -64,8 +65,9 @@ if (!empty($_POST["submitButton"])) {
 }
 
 //DBからのデータ取得
-$sql = "SELECT `id`, `userName`, `comment`, `postDate` FROM `bbs-table`;";
+$sql = "SELECT `id`, `userName`, `comment`, `postDate` FROM `bbs-table` ORDER BY `postDate` DESC;";
 $commentArray = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
 
 //DB接続終了
 $pdo = null;
@@ -85,9 +87,21 @@ $pdo = null;
 <body>
     <div class = "logo">
         <img src="./images/icon/icon.png" width="5%" height="5%">
+        <div class = userInfo>
+            <h3><?php echo $_SESSION['userName']; ?></h3>
+        </div>
     </div>
     <hr>
     <div class="boardWrapper">
+    <form class="formWrapper" method="POST">
+            <div>
+                <textarea class="commentTextArea" name="comment"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="記入" name="submitButton">
+                <label for=""></label>
+            </div>
+        </form>
         <section>
             <?php foreach ($commentArray as $comment) : ?>
                 <article>
@@ -102,16 +116,7 @@ $pdo = null;
             <?php endforeach; ?>
         </section>
 
-        <form class="formWrapper" method="POST">
-            <div>
-                <input type="submit" value="記入" name="submitButton">
-                <label for="">名前</label>
-                <input type="text" name="username" value="<?php echo $_SESSION['userName']; ?>" disabled>
-            </div>
-            <div>
-                <textarea class="commentTextArea" name="comment"></textarea>
-            </div>
-        </form>
+       
     </div>
     <form method="POST" style="text-align: center;">
         <input type="submit" name="logout" value="ログアウト">

@@ -12,13 +12,13 @@ class user {
     public function user(){
     }
 }
-
+require_once 'Settings.php';
 if(isset($_POST['login'])){
     $userName = trim($_POST['userName']);
     $userPassword = trim($_POST['userPassword']); // ハッシュ化前のパスワードを取得
 
     try{
-        $pdo = new PDO('mysql:host=localhost;dbname=sample', "root", "");
+        $pdo = new PDO('mysql:host='.$db_host.';dbname='.$db_name, $db_user, $db_pass);
         $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `userName` = :userName");
         $stmt->bindParam(':userName', $userName, PDO::PARAM_STR);
         $stmt-> execute();
