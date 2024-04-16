@@ -1,0 +1,110 @@
+
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgb(141, 166, 187), rgb(63, 95, 114));
+  background-attachment: fixed;
+  margin: 0;
+  animation: changeBackground 5s infinite; /* 5秒かけて繰り返し変化させる */
+}
+  
+.logo {
+  margin-left: 50%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateX(-50%);
+
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgb(236, 236, 236);
+  z-index: 1000; /* 他の要素よりも前面に表示されるようにする */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* 影を追加する */
+  
+}
+.logo a{
+  margin: 0 auto; /* 横方向に中央に寄せる */
+   
+}
+.userInfo {
+  margin: 0 auto; /* 横方向に中央に寄せる */
+   /* 必要に応じて適切な幅を指定 */
+}
+
+  
+  .boardWrapper {
+    /* background-color: #b3eeb3; */
+    background-color: #f3eded;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid black;
+    margin-bottom: 20px;
+  }
+  
+  section {
+    padding: 0px 10px;
+  }
+  
+  section .username {
+    color: green !important;
+    font-weight: 700;
+  }
+  
+  section .nameArea {
+    display: flex;
+    align-items: center;
+    margin-bottom: -14px;
+  }
+  
+  section .comment {
+    margin-top: 0;
+    margin-left: 20px;
+  }
+  
+  .success_message {
+    color: rgb(0, 0, 0);
+    padding-left: 10px;
+  }
+  
+  .error_message {
+    color: red;
+    padding-left: 10px;
+  }
+  
+  .formWrapper {
+    padding: 16px;
+    margin-left: 20px;
+  }
+  
+  .commentTextArea {
+    margin-top: 10px;
+    width: 500px;
+    height: 90px;
+  }
+
+  
+.menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  margin-bottom: 5px;
+}
+
+.menu ul li a {
+  color: #333;
+  text-decoration: none;
+}
+
