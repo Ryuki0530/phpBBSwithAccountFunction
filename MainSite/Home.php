@@ -39,7 +39,7 @@ if (!empty($_POST["submitButton"])) {
 
         $postDate = date("Y-m-d H:i:s");
         try {
-            $stmt = $pdo->prepare("INSERT INTO `bbs-table` (`userID`,`userName`, `comment`, `postDate`) VALUES (:userID,:userName, :comment, :postDate)");
+            $stmt = $pdo->prepare("INSERT INTO `bbstable` (`userID`,`userName`, `comment`, `postDate`) VALUES (:userID,:userName, :comment, :postDate)");
 
             $stmt->bindParam(':userID',$_SESSION['userID'],PDO::PARAM_INT);
             $stmt->bindParam(':userName', $_SESSION['userName'], PDO::PARAM_STR);
@@ -59,7 +59,7 @@ if (!empty($_POST["submitButton"])) {
 }
 
 //DBからのデータ取得
-$sql = "SELECT `id`, `userID`, `userName`, `comment`, `postDate` FROM `bbs-table` ORDER BY `postDate` DESC;";
+$sql = "SELECT `id`, `userID`, `userName`, `comment`, `postDate` FROM `bbstable` ORDER BY `postDate` DESC;";
 $commentArray = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 

@@ -1,0 +1,19 @@
+MySQLで使用するDBを選択した後、以下のクエリを実行して必要なテーブルを作成してください。
+
+CREATE TABLE bbstable(
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `userID` INT(11) NOT NULL,
+    `userName` VARCHAR(11) NOT NULL,
+    `comment` VARCHAR(60) NOT NULL,
+    `postDate` DATETIME NOT NULL
+);
+
+
+CREATE TABLE users(
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `userName` VARCHAR(30) NOT NULL,
+    `password` VARCHAR(200) NOT NULL
+);
+
+
+Settings.php内にDB関連のプロパティを入力してください。
