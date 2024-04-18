@@ -34,11 +34,11 @@ $pdo = null;
 <html lang="en">
 
 <head>
-    <link rel="shortcut icon" href="./images/icon/icon.png">
+    <link rel="shortcut icon" href="../images/icon/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム</title>
-    <link rel="stylesheet" href="../css/Home.css">
+    <link rel="stylesheet" href="../css/userSetting.css">
 </head>
 
 
@@ -56,7 +56,7 @@ function hideMenu() {
 
 <body>
     <div class = "logo"><br>
-    <a href="Home.php"><img src="../images/icon/icon.png" width="30%" height="80%"><br></a>
+    <a href="../MainSite/Home.php"><img src="../images/icon/icon.png" width="30%" height="80%"><br></a>
         <div class = userInfo>
             <div class = "menu-container">
                 <span class="menu-text" onmouseover="showMenu()">
@@ -65,9 +65,8 @@ function hideMenu() {
                 <div class="menu" onmouseleave="hideMenu()">
                 <ul>
                     <li>
-                        <?php echo('<a href="userpage.php?user_Name='.$_SESSION['userName'].'">マイページ</a>'); ?><hr>
-                        <a href="userSetting.php">ユーザー設定</a><hr>
-                        <a href="logout.php">ログアウト</a>
+                        <?php echo('<a href="../MainSite/userpage.php?user_Name='.$_SESSION['userName'].'">マイページ</a>'); ?><hr>
+                        <a href="../login/logout.php"><font color="red">ログアウト</font></a>
                     <li>
                 <ul>
                 </div>
@@ -84,12 +83,13 @@ function hideMenu() {
         <h1>ユーザー設定</h1>
     </div>
     <div class="boardWrapper">
-        <h2>ユーザー情報<h2>
+        <h2>ユーザー情報</h2>
+        ユーザー名変更<br>
+        パスワード変更
             
 
     </div>
-    
-    <?php echo("USER ID:".$_SESSION['userID']);?>
+    <?php echo("<h3>Ver.alpha1.2</h3/<br>USER ID:".$_SESSION['userID']);?>
     <br>    
 </body>
 

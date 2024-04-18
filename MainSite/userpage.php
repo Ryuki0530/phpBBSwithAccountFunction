@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Tokyo");
 
-$thisUserName = isset($_GET['user_Name']) ? $_GET['user_Name'] : null;
+$thisUserID = isset($_GET['user_ID']) ? $_GET['user_ID'] : null;
 
 $commentArray = array();
 $pdo = null;
@@ -33,13 +33,12 @@ if(isset($_POST['logout'])){
     header("Location: login.php");
     exit();
 }
-
-//投稿作成
+// 投稿作成
 if (!empty($_POST["submitButton"])) {
     $username = $_SESSION['userName'];
     $comment = trim($_POST["comment"]);
 
-    //バリデーションチェック
+    // バリデーションチェック
     if (empty($comment)) {
         echo "コメントは必須です。";
     } else {
@@ -55,10 +54,9 @@ if (!empty($_POST["submitButton"])) {
             $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
             $stmt->bindParam(':postDate', $postDate, PDO::PARAM_STR);
 
-            
             $stmt->execute();
 
-            //リダイレクト処理
+            // リダイレクト処理
             header("Location: Home.php");
             exit();
 
@@ -68,13 +66,31 @@ if (!empty($_POST["submitButton"])) {
     }
 }
 
-//DBからのデータ取得
-$sql = "SELECT `id`, `userName`, `comment`, `postDate` FROM `bbstable` WHERE `userName` = :thisUserName ORDER BY `postDate` DESC;";
+//IDからユーザー情報を取得
+$sql = "SELECT username FROM users WHERE id = :id";
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(':thisUserName', $thisUserName, PDO::PARAM_STR);
+$stmt->bindParam(':id', $thisUserID, PDO::PARAM_INT);
+$stmt->execute();
+
+// 結果を取得
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// 結果がある場合、ユーザー名を代入
+if ($result) {
+    $thisUserName = $result['username'];
+} else {
+    $thisUserName = null; // あるいはエラー処理
+}
+
+
+// DBからのデータ取得
+$sql = "SELECT `id`, `userName`, `comment`, `postDate` FROM `bbstable` WHERE `userID` = :thisUserID ORDER BY `postDate` DESC;";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':thisUserID', $thisUserID, PDO::PARAM_STR);
 $stmt->execute();
 $commentArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+unset($comment); // Unset the reference to avoid potential issues
 
 //DB接続終了
 $pdo = null;
@@ -84,7 +100,7 @@ $pdo = null;
 <html lang="en">
 
 <head>
-    <link rel="shortcut icon" href="./images/icon/icon.png">
+    <link rel="shortcut icon" href="../images/icon/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム</title>
@@ -115,8 +131,8 @@ function hideMenu() {
                 <div class="menu" onmouseleave="hideMenu()">
                 <ul>
                     <li>
-                        <a href="./userSettings/userSetting.php">ユーザー設定</a><hr>
-                        <hr><a href="../login/logout.php"><>ログアウト<></a>
+                        <a href="../userSettings/userSetting.php">ユーザー設定</a><hr>
+                        <a href="../login/logout.php"><font color="red">ログアウト</font></a>
                     <li>
                 <ul>
                 </div>
@@ -154,20 +170,19 @@ function hideMenu() {
                 <article>
                     <div class="wrapper">
                         <div class="nameArea">
-                            <p class="username"><?php echo $comment["userName"]; ?></p>
+                            <p class="username"><?php echo $thisUserName; ?></p>
                             <time><?php echo $comment["postDate"]; ?></time>
                         </div>
                         <p class="comment"><?php echo $comment["comment"]; ?></p>
                     </div>
                 </article>
+                <hr>
             <?php endforeach; ?>
         </section>
-
+            
        
     </div>
-    <form method="POST" style="text-align: center;">
-        <input type="submit" name="logout" value="ログアウト">
-    </form>
+    
     <?php echo("USER ID:".$_SESSION['userID']);?>
     <br>    
 </body>

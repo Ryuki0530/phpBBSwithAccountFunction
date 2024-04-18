@@ -11,6 +11,7 @@ require_once '../Settings.php';
 //DB接続
 try{
     $pdo = new PDO('mysql:host='.$db_host.';dbname='.$db_name, $db_user, $db_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // PDOのエラーモードを設定して例外を投げるようにする
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
@@ -62,6 +63,17 @@ if (!empty($_POST["submitButton"])) {
 $sql = "SELECT `id`, `userID`, `userName`, `comment`, `postDate` FROM `bbstable` ORDER BY `postDate` DESC;";
 $commentArray = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
+foreach ($commentArray as &$comment) {
+    $userId = $comment['userID'];
+    $userSql = "SELECT `userName` FROM `users` WHERE `id` = :userId";
+    $userStmt = $pdo->prepare($userSql);
+    $userStmt->execute(['userId' => $userId]);
+    $userName = $userStmt->fetchColumn();
+
+    $comment['userName'] = $userName;
+}
+unset($comment); // Unset the reference to avoid potential issues
+
 
 //DB接続終了
 $pdo = null;
@@ -71,7 +83,7 @@ $pdo = null;
 <html lang="en">
 
 <head>
-    <link rel="shortcut icon" href="./images/icon/icon.png">
+    <link rel="shortcut icon" href="../images/icon/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム</title>
@@ -92,18 +104,19 @@ function hideMenu() {
 
 
 <body>
-    <div class = "logo"><br>
+    <div class = "logo">
     <a href="Home.php"><img src="../images/icon/icon.png" width="30%" height="80%"><br></a>
+            
         <div class = userInfo>
             <div class = "menu-container">
                 <span class="menu-text" onmouseover="showMenu()">
-                    <h3><?php echo($_SESSION['userName']);?></h3>
+                    <h3><?php echo($_SESSION['userName']."");?></h3>
                 </span>
                 <div class="menu" onmouseleave="hideMenu()">
                 <ul>
                     <li>
-                        <?php echo('<a href="userpage.php?user_Name='.$_SESSION['userName'].'">マイページ</a>'); ?><hr>
-                        <a href="./userSettings/userSetting.php">ユーザー設定</a><hr>
+                        <?php echo('<a href="userpage.php?user_ID='.$_SESSION['userID'].'">マイページ</a>'); ?><hr>
+                        <a href="../userSettings/userSetting.php">ユーザー設定</a><hr>
                         <a href="../login/logout.php"><font color="red">ログアウト</font></a>
                     <li>
                 <ul>
@@ -154,9 +167,11 @@ function hideMenu() {
        
     </div>
     
-    <?php echo("USER ID:".$_SESSION['userID']);?>
+    
     <br>    
 </body>
 
 
 </html>
+
+
