@@ -19,7 +19,7 @@ try {
 //セッション開始
 session_start();
 
-//ログインチェック
+//ログイン状況のチェック
 if (!isset($_SESSION['userName'])) {
     header("Location: login.php");
     exit();
@@ -103,7 +103,7 @@ $pdo = null;
     <link rel="shortcut icon" href="../images/icon/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ホーム</title>
+    <title><?php echo($thisUserName)."のユーザーページ" ?></title>
     <link rel="stylesheet" href="../css/userpage.css">
 </head>
 
@@ -142,11 +142,15 @@ function hideMenu() {
 
 
     <hr>
-    <br>
-    <br>
-    <br>
-    <br>
     
+    <div class="boardWrapper">
+        
+    <br>
+    <br>
+    <br>
+        <h1><?php echo("　 ".$thisUserName) ?></h1>
+    </div>
+
     <div class="boardWrapper">
     
     <?php
@@ -154,7 +158,7 @@ function hideMenu() {
             echo('
                 <form class="formWrapper" method="POST">
                 <div>
-                    <textarea class="commentTextArea" name="comment"></textarea>
+                <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box;" value="幅100%" ></textarea>
                 </div>
                 <div>
                     <input type="submit" value="記入" name="submitButton">

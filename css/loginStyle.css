@@ -14,7 +14,7 @@ body {
     border: ridge 5px rgb(83, 81, 87); 
     background-color: aliceblue;
     width: 300px; /* 四角の幅を300pxに設定 */
-    height: 200px; /* 四角の高さを200pxに設定 */
+    height: 250px; /* 四角の高さを200pxに設定 */
     margin: 0 auto;
 }
 

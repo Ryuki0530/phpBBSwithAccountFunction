@@ -40,6 +40,7 @@ body {
       margin: 0 auto;
       border: 1px solid black;
       margin-bottom: 20px;
+      
     }
     
     section {
@@ -105,6 +106,30 @@ body {
   .menu ul li a {
     color: #333;
     text-decoration: none;
+  } 
+  
+  
+  
+/* スマホ用 */
+@media only screen and (max-width: 600px) {
+    body{
+      width: 100vw;
+      height: 100vh;
+      
+    background-attachment: fixed;
+    margin: 0;
+    }
+    .boardWrapper {
+      background-color: #f3eded;
+      padding: 20px;
+      max-width: 300px;
+      margin: 0 auto;
+      border: 1px solid black;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 16px rgb(175, 205, 215); /
+    }
+    .logo img{
+      width:20%; 
+      height:80%;
+    }
   }
-  
-  

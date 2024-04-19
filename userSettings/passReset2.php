@@ -2,13 +2,6 @@
 
 require_once '../Settings.php';
 
-
-//セッション情報の確認とリダイレクト
-if(isset($_SESSION['userName'])){
-    header("Location: ../MainSite/Home.php");
-    exit();
-}
-
 if(isset($_POST['signin'])){
     $userName = trim($_POST['userName']);
     $userPassword = password_hash(trim($_POST['userPassword']), PASSWORD_DEFAULT);
@@ -22,19 +15,7 @@ if(isset($_POST['signin'])){
         $stmt->execute();
         $count = $stmt->fetchColumn();
 
-        if($count != 0){
-            echo(
-               "このユーザー名は既に使われています"
-            );
-        }else{
-            $stmt = $pdo->prepare("INSERT INTO `users` (`userName`, `password`) VALUES (:userName, :userPassword)");
-            $stmt->bindParam(':userName', $userName, PDO::PARAM_STR);
-            $stmt->bindParam(':userPassword', $userPassword, PDO::PARAM_STR);
-            $stmt-> execute();
-            $stmt = null;
-            $pdo = null;
-            header("Location:login.php");
-        }
+        
 
        
     }catch(PDOException $e){
@@ -50,19 +31,21 @@ if(isset($_POST['signin'])){
 <link rel="shortcut icon" href="../images/icon/icon.png">
     <link rel="stylesheet" href = "../css/signinStyle.css">
     <meta charset ="utf-8">
-    <title>新規登録</title>
+    <title>パスワードリセット</title>
 </head>
 <body>
     <br>
     <div class = "signinPanel">
-        <h1>ユーザー新規登録</h1>
+        <h1></h1>
         <form action="" method="POST">
-            ユーザー名 <input type = "text" name="userName" value = ""><br>
-            パスワード <input type = "password" name="userPassword" value = ""><br>
+            メールアドレス<input type = "text" name="mailAd" value = ""><br>
+            <input type = "submit" name = "signin" value = "確認メールを送信">
+            <br>
+            <input type = "password" name="userPassword" value = ""><br>
             
             <font color="red" size="3px">他サービスで使用中のパスワードは絶対に入力しないでください。</font>
             <br>
-            <input type = "submit" name = "signin" value = "登録">
+            
         </form>
     </div>
 </body>

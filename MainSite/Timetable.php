@@ -19,7 +19,7 @@ try{
 //セッション開始
 session_start();
 
-//ログインチェック
+//ログイン状況のチェック
 if (!isset($_SESSION['userName'])) {
     header("Location: ../login/login.php");
     exit();

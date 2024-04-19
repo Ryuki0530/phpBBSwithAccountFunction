@@ -2,7 +2,7 @@
 
 session_start();
 
-//セッション情報の確認
+//セッション情報の確認とリダイレクト
 if(isset($_SESSION['userName'])){
     header("Location: ../MainSite/Home.php");
     exit();
@@ -55,6 +55,7 @@ if(isset($_POST['login'])){
             <input type = "submit" name = "login" value = "ログイン">
         </form>
         <a href = "signin.php">新規登録</a>
+        <a href = "../userSettings/passReset.php"><font color="red">パスワードのリセットはこちら</font></a>
     </div>
 </body>
 </html>

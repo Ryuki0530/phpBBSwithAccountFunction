@@ -19,7 +19,7 @@ try{
 //セッション開始
 session_start();
 
-//ログインチェック
+//ログイン状況のチェック
 if (!isset($_SESSION['userName'])) {
     header("Location: ../login/login.php");
     exit();
@@ -88,6 +88,8 @@ $pdo = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム</title>
     <link rel="stylesheet" href="../css/Home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 
@@ -105,7 +107,7 @@ function hideMenu() {
 
 <body>
     <div class = "logo">
-    <a href="Home.php"><img src="../images/icon/icon.png" width="30%" height="80%"><br></a>
+    <a href="Home.php"><img src="../images/icon/icon.png" ><br></a>
             
         <div class = userInfo>
             <div class = "menu-container">
@@ -126,14 +128,15 @@ function hideMenu() {
     </div>
     
     
-    <br>
-    <br>
+    
     
     <div class="boardWrapper">
     <form class="formWrapper" method="POST">
         <br>
+        <br>
+    <br>
             <div>
-                <textarea class="commentTextArea" name="comment"></textarea>
+                <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box;" value="幅100%" ></textarea>
             </div>
             <div>
                 <input type="submit" value="投稿" name="submitButton">
@@ -150,10 +153,11 @@ function hideMenu() {
                             
                             ?>
                             <p class="username"><?php
-                                $url = 'userpage.php?user_Name=' . $comment["userName"]; 
+                                $url = 'userpage.php?user_ID=' . $comment["userID"]; 
                                 echo ('<a href="'.$url.'">'.$comment["userName"].'</a>');
-                            ?></p>
+                            ?></p><hr><font size="2px">
                             <time><?php echo $comment["postDate"]; ?></time>
+                            </font>
 
                         </div>
                         <p class="comment"><?php echo $comment["comment"]; ?></p>

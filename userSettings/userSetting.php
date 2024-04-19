@@ -18,7 +18,7 @@ try{
 //セッション開始
 session_start();
 
-//ログインチェック
+//ログイン状況のチェック
 if (!isset($_SESSION['userName'])) {
     header("Location: login.php");
     exit();
@@ -37,7 +37,7 @@ $pdo = null;
     <link rel="shortcut icon" href="../images/icon/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ホーム</title>
+    <title>ユーザー設定</title>
     <link rel="stylesheet" href="../css/userSetting.css">
 </head>
 
@@ -65,7 +65,7 @@ function hideMenu() {
                 <div class="menu" onmouseleave="hideMenu()">
                 <ul>
                     <li>
-                        <?php echo('<a href="../MainSite/userpage.php?user_Name='.$_SESSION['userName'].'">マイページ</a>'); ?><hr>
+                        <?php echo('<a href="../MainSite/userpage.php?user_ID='.$_SESSION['userID'].'">マイページ</a>'); ?><hr>
                         <a href="../login/logout.php"><font color="red">ログアウト</font></a>
                     <li>
                 <ul>
@@ -81,15 +81,28 @@ function hideMenu() {
    
     <div class="boardWrapper">
         <h1>ユーザー設定</h1>
+        <h2><font color = RED>このページは開発中です。</font></h2>
     </div>
     <div class="boardWrapper">
         <h2>ユーザー情報</h2>
         ユーザー名変更<br>
-        パスワード変更
+        <input type = "text" name="userName" value = ""><br>
+        <input type = "submit" name = "login" value = "変更">
+        パスワード変更<br>
+        <input type = "password" name="userPassword1" value = ""><br>
+        <input type = "password" name="userPassword2" value = ""><br>
+        <input type = "submit" name = "login" value = "変更">
             
 
     </div>
-    <?php echo("<h3>Ver.alpha1.2</h3/<br>USER ID:".$_SESSION['userID']);?>
+    <div class="boardWrapper">
+        <h2>表示</h2>
+    </div>
+    <h3>
+    <font color = "White">final commit:2024/04/19
+    <?php echo("<br>USER ID:".$_SESSION['userID']);?>
+    </font>
+    <h3>
     <br>    
 </body>
 

@@ -20,8 +20,12 @@ body {
     width: 100%;
     background-color: rgb(236, 236, 236);
     z-index: 1000; /* 他の要素よりも前面に表示されるようにする */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* 影を追加する */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* 影を追加する */
     
+  }
+  .logo img{
+    width:30%; 
+    height:80%;
   }
   .logo a{
     margin: 0 auto; /* 横方向に中央に寄せる */
@@ -40,6 +44,7 @@ body {
     margin: 0 auto;
     border: 1px solid black;
     margin-bottom: 20px;
+    box-shadow: 0 8px 16px rgb(175, 205, 215); /* 影を追加する */
   }
   
   section {
@@ -107,3 +112,27 @@ body {
   text-decoration: none;
 }
 
+
+/* スマホ用 */
+@media only screen and (max-width: 600px) {
+  body{
+    width: 100vw;
+    height: 100vh;
+    
+  background-attachment: fixed;
+  margin: 0;
+  }
+  .boardWrapper {
+    background-color: #f3eded;
+    padding: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 1px solid black;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 16px rgb(175, 205, 215); /
+  }
+  .logo img{
+    width:20%; 
+    height:80%;
+  }
+}

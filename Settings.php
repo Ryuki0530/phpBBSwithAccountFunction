@@ -1,7 +1,6 @@
 <?php
-//使用するDBの情報を入力してください。
-$db_host = '';
-$db_name = '';
-$db_user = '';
+$db_host = 'localhost';
+$db_name = 'bbsd';
+$db_user = 'root';
 $db_pass = '';
 ?>
