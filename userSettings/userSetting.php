@@ -81,7 +81,7 @@ function hideMenu() {
    
     <div class="boardWrapper">
         <h1>ユーザー設定</h1>
-        <h2><font color = RED>このページは開発中です。</font></h2>
+        <h2><font color = RED>このページは開発中です。使用しないでください。</font></h2>
     </div>
     <div class="boardWrapper">
         <h2>ユーザー情報</h2>
