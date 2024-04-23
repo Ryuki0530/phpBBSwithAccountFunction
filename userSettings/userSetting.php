@@ -43,15 +43,15 @@ $pdo = null;
 
 
 <script>
-    function showMenu() {
-  document.querySelector('.menu').style.display = 'block';
+//メニュー表示関数
+function showMenu() {
+    document.querySelector('.menu').style.display = 'block';
 }
-
+//メニュー非表示関数
 function hideMenu() {
-  document.querySelector('.menu').style.display = 'none';
+    document.querySelector('.menu').style.display = 'none';
 }
 </script>
-
 
 
 <body>
@@ -99,7 +99,7 @@ function hideMenu() {
         <h2>表示</h2>
     </div>
     <h3>
-    <font color = "White">final commit:2024/04/19
+    <font color = "White">final commit:2024/04/23
     <?php echo("<br>USER ID:".$_SESSION['userID']);?>
     </font>
     <h3>

@@ -26,6 +26,7 @@ if (!isset($_SESSION['userName'])) {
 }
 
 
+
 //投稿作成
 if (!empty($_POST["submitButton"])) {
     $username = $_SESSION['userName'];
@@ -72,7 +73,7 @@ foreach ($commentArray as &$comment) {
 
     $comment['userName'] = $userName;
 }
-unset($comment); // Unset the reference to avoid potential issues
+unset($comment);
 
 
 //DB接続終了
@@ -94,12 +95,18 @@ $pdo = null;
 
 
 <script>
-    function showMenu() {
-  document.querySelector('.menu').style.display = 'block';
+//メニュー表示関数
+function showMenu() {
+    document.querySelector('.menu').style.display = 'block';
 }
-
+//メニュー非表示関数
 function hideMenu() {
-  document.querySelector('.menu').style.display = 'none';
+    document.querySelector('.menu').style.display = 'none';
+}
+//投稿ページの文字数カウンター
+function mojiCount(textarea) {
+    var charCount = textarea.value.length;
+    document.getElementById('mojiCountReturn').textContent = charCount;
 }
 </script>
 
@@ -134,17 +141,20 @@ function hideMenu() {
     <form class="formWrapper" method="POST">
         <br>
         <br>
-    <br>
-            <div>
-                <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box;" value="幅100%" ></textarea>
-            </div>
-            <div>
-                <input type="submit" value="投稿" name="submitButton">
-                <label for=""></label>
-            </div>
-        </form>
+        
+        
+        <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box; font-size: 200% " value="幅100%"  maxlength="60" oninput="mojiCount(this)"></textarea>
+        
+        <br>
+        <br>
+        <input class = "submitButton" type="submit" value="投稿" name="submitButton">
+        　文字数：<span id="mojiCountReturn">0</span>/60
+        
+        
+    </form>
+    </div>
+    <div class="boardWrapper">
         <section>
-            <hr>
             <?php foreach ($commentArray as $comment) : ?>
                 <article>
                     <div class="wrapper">
@@ -154,7 +164,7 @@ function hideMenu() {
                             ?>
                             <p class="username"><?php
                                 $url = 'userpage.php?user_ID=' . $comment["userID"]; 
-                                echo ('<a href="'.$url.'">'.$comment["userName"].'</a>');
+                                echo ("　".'<a href="'.$url.'">'.$comment["userName"].'</a>');
                             ?></p><hr><font size="2px">
                             <time><?php echo $comment["postDate"]; ?></time>
                             </font>

@@ -90,7 +90,7 @@ $stmt->bindParam(':thisUserID', $thisUserID, PDO::PARAM_STR);
 $stmt->execute();
 $commentArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-unset($comment); // Unset the reference to avoid potential issues
+unset($comment);
 
 //DB接続終了
 $pdo = null;
@@ -109,12 +109,18 @@ $pdo = null;
 
 
 <script>
-    function showMenu() {
-  document.querySelector('.menu').style.display = 'block';
+//メニュー表示関数
+function showMenu() {
+    document.querySelector('.menu').style.display = 'block';
 }
-
+//メニュー非表示関数
 function hideMenu() {
-  document.querySelector('.menu').style.display = 'none';
+    document.querySelector('.menu').style.display = 'none';
+}
+//投稿ページの文字数カウンター
+function mojiCount(textarea) {
+    var charCount = textarea.value.length;
+    document.getElementById('mojiCountReturn').textContent = charCount;
 }
 </script>
 
@@ -156,15 +162,19 @@ function hideMenu() {
     <?php
         if($thisUserName == $_SESSION['userName']){
             echo('
-                <form class="formWrapper" method="POST">
-                <div>
-                <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box;" value="幅100%" ></textarea>
-                </div>
-                <div>
-                    <input type="submit" value="記入" name="submitButton">
-                        <label for=""></label>
-                </div>
-                </form>
+            <form class="formWrapper" method="POST">
+        
+            
+            
+            <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box; font-size: 200% " value="幅100%"  maxlength="60" oninput="mojiCount(this)"></textarea>
+            
+            <br>
+            <br>
+            <input class = "submitButton" type="submit" value="投稿" name="submitButton">
+            　文字数：<span id="mojiCountReturn">0</span>/60
+            
+            </form>
+            <hr>
             ');
         }
     ?>
@@ -174,10 +184,10 @@ function hideMenu() {
                 <article>
                     <div class="wrapper">
                         <div class="nameArea">
-                            <p class="username"><?php echo $thisUserName; ?></p>
-                            <time><?php echo $comment["postDate"]; ?></time>
+                            <p class="username"><?php echo("　".$thisUserName); ?></p><hr>
+                            <time><?php echo($comment["postDate"]); ?></time>
                         </div>
-                        <p class="comment"><?php echo $comment["comment"]; ?></p>
+                        <p class="comment"><?php echo($comment["comment"]); ?></p>
                     </div>
                 </article>
                 <hr>
@@ -187,7 +197,6 @@ function hideMenu() {
        
     </div>
     
-    <?php echo("USER ID:".$_SESSION['userID']);?>
     <br>    
 </body>
 

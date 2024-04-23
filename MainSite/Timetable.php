@@ -44,15 +44,15 @@ $pdo = null;
 
 
 <script>
-    function showMenu() {
-  document.querySelector('.menu').style.display = 'block';
+//メニュー表示関数
+function showMenu() {
+    document.querySelector('.menu').style.display = 'block';
 }
-
+//メニュー非表示関数
 function hideMenu() {
-  document.querySelector('.menu').style.display = 'none';
+    document.querySelector('.menu').style.display = 'none';
 }
 </script>
-
 
 
 <body>
