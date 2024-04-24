@@ -27,7 +27,7 @@ if(isset($_POST['login'])){
             header("Location:../MainSite/Home.php");
             exit();
         }else{
-            echo "ユーザー名またはパスワードが間違っています。";
+            echo('<script>alert("ユーザー名またはパスワードが一致しません。");</script>');
         }
         $stmt = null;
         $pdo = null;
@@ -50,12 +50,15 @@ if(isset($_POST['login'])){
     <div class = "loginPanel">
         <h1>ログイン</h1>
         <form action="" method="POST">
-            ユーザー名 <input type = "text" name="userName" value = ""><br>
-            パスワード <input type = "password" name="userPassword" value = ""><br>
+            ユーザー名 <input type = "text" name="userName" value = "" required><br>
+            パスワード <input type = "password" name="userPassword" value = "" required><br>
             <input type = "submit" name = "login" value = "ログイン">
         </form>
         <a href = "signin.php">新規登録</a>
         <!--<a href = "../userSettings/passReset.php"><font color="red">パスワードのリセットはこちら</font></a>-->
     </div>
+    <font size = "8px" color = "White">
+    <a href="https://github.com/Ryuki0530/phpBBSwithAccountFunction" Style = "background-color: #f3eded; position: absolute;right: 0;bottom: 0;">GitHubリポジトリ</a>
+    </font>
 </body>
 </html>

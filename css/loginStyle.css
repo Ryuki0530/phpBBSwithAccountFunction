@@ -1,4 +1,5 @@
 body {
+    position: relative;
     background: linear-gradient(rgb(121, 192, 240), white);
 }
 

@@ -12,10 +12,10 @@ if(isset($_SESSION['userName'])){
 
 if(isset($_POST['signin'])){
     $userName = trim($_POST['userName']);
-    $userPassword = password_hash(trim($_POST['userPassword']), PASSWORD_DEFAULT);
-        if (empty($userName)||empty($userPassword)) {
-            echo("ユーザー名　パスワードは必須です。");
-        } else {
+    $userPassword = $_POST['userPassword'];
+    $userPassword2 = $_POST['userPassword2'];
+    if (empty($userName)||empty($userPassword)||empty($userPassword2)) {
+        }else{
             
         try{
             //DB接続
@@ -25,7 +25,7 @@ if(isset($_POST['signin'])){
             $stmt = $pdo->prepare("SELECT COUNT(*) FROM `users` WHERE `userName` = :userName");
             $stmt->bindParam(':userName',$userName,PDO::PARAM_STR);
             $stmt->execute();
-            $count = $stmt->fetchColumn();
+            $checkCount = $stmt->fetchColumn();
 
             /*メールアドレスはSSLの準備が完了次第。
             $stmt = $pdo->prepare("SELECT COUNT(*) FROM `users` WHERE `mailAd` = :mailAd");
@@ -34,18 +34,24 @@ if(isset($_POST['signin'])){
             $count = $stmt->fetchColumn();
             */
 
-            if($count != 0){
-                echo(
-                "このユーザー名は既に使われています"
-                );
+            
+            if($checkCount != 0){
+                echo("このユーザー名は既に使われています");
             }else{
-                $stmt = $pdo->prepare("INSERT INTO `users` (`userName`, `password`) VALUES (:userName, :userPassword)");
-                $stmt->bindParam(':userName', $userName, PDO::PARAM_STR);
-                $stmt->bindParam(':userPassword', $userPassword, PDO::PARAM_STR);
-                $stmt-> execute();
-                $stmt = null;
-                $pdo = null;
-                header("Location:login.php");
+                //パスワード入力確認
+                if($userPassword == $userPassword2){
+                    $userPassword = password_hash(trim($_POST['userPassword']), PASSWORD_DEFAULT);
+                    $userPassword2 = password_hash(trim($_POST['userPassword2']), PASSWORD_DEFAULT);
+                    $stmt = $pdo->prepare("INSERT INTO `users` (`userName`, `password`) VALUES (:userName, :userPassword)");
+                    $stmt->bindParam(':userName', $userName, PDO::PARAM_STR);
+                    $stmt->bindParam(':userPassword', $userPassword, PDO::PARAM_STR);
+                    $stmt-> execute();
+                    $stmt = null;
+                    $pdo = null;
+                    header("Location:login.php");
+                }else{
+                    echo('<script>alert("再入力のパスワードが一致しません。");</script>');
+                }
             }
 
         
@@ -70,10 +76,12 @@ if(isset($_POST['signin'])){
     <div class = "signinPanel">
         <h1>ユーザー新規登録</h1>
         <form action="" method="POST">
-            ユーザー名 <input type = "text" name="userName" value = "" maxlength="30" required><br>
+            ユーザー名　　　　　<input type = "text" name="userName" value = "" maxlength="30" required><br>
+            <font size="2px">ユーザー名は大小文字のアルファベットと数字及び記号（._）のみ使用できます。</font><br><br>
             <!--(SSLの準備ができてから開始) メールアドレス<input type="email" name="mailAd"><br>-->
-            パスワード <input type = "password" name="userPassword" value = "" maxlength="50" required><br>
-            
+            パスワード　　　　　<input type = "password" name="userPassword" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br>
+            パスワード(再入力)　<input type = "password" name="userPassword2" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br>
+            <font size="2px">パスワードは大小文字のアルファベットと数字及び記号（._）のみ使用できます。</font><br>
             <font color="red" size="3px">他サービスで使用中のパスワードは絶対に入力しないでください。</font>
             <br>
             <input type = "submit" name = "signin" value = "登録">

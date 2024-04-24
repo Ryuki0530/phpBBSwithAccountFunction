@@ -34,7 +34,7 @@ if (!empty($_POST["submitButton"])) {
 
     //バリデーションチェック
     if (empty($comment)) {
-        echo "コメントは必須です。";
+        //echo('<script>alert("投稿内容を入力してください。")</script>');
     } else {
         // エスケープ処理
         $comment = htmlspecialchars($comment, ENT_QUOTES, 'UTF-8');
@@ -139,6 +139,7 @@ function mojiCount(textarea) {
     
     <div class="boardWrapper">
     <form class="formWrapper" method="POST">
+        <hr>
         <br>
         <br>
         
@@ -146,6 +147,8 @@ function mojiCount(textarea) {
         <textarea class="commentTextArea" name="comment" style="width: 100%; box-sizing: border-box; font-size: 200% " value="幅100%"  maxlength="60" oninput="mojiCount(this)"></textarea>
         
         <br>
+        
+        <font color="red" size = 2px>人が不快に感じる表現(下ネタ、政治的発言等)はしないでください。</font>
         <br>
         <input class = "submitButton" type="submit" value="投稿" name="submitButton">
         　文字数：<span id="mojiCountReturn">0</span>/60

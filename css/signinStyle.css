@@ -14,6 +14,6 @@ body {    background: linear-gradient(rgb(255, 255, 255), rgb(255, 138, 138));
     border: ridge 5px rgb(51, 0, 0); 
     background-color: rgb(255, 255, 255);
     width: 500px; /* 四角の幅を300pxに設定 */
-    height: 200px; /* 四角の高さを200pxに設定 */
+    height: 270px; /* 四角の高さを200pxに設定 */
     margin: 0 auto;
 }
