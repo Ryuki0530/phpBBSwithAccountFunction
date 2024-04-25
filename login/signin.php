@@ -36,7 +36,7 @@ if(isset($_POST['signin'])){
 
             
             if($checkCount != 0){
-                echo("このユーザー名は既に使われています");
+                echo('<script>alert("このユーザー名は既に使われています。");</script>');
             }else{
                 //パスワード入力確認
                 if($userPassword == $userPassword2){
@@ -67,7 +67,7 @@ if(isset($_POST['signin'])){
 <html>
 <head>
 <link rel="shortcut icon" href="../images/icon/icon.png">
-    <link rel="stylesheet" href = "../css/signinStyle.css">
+    <link rel="stylesheet" href = "../css/loginStyle.css">
     <meta charset ="utf-8">
     <title>新規登録</title>
 </head>
@@ -76,15 +76,17 @@ if(isset($_POST['signin'])){
     <div class = "signinPanel">
         <h1>ユーザー新規登録</h1>
         <form action="" method="POST">
-            ユーザー名　　　　　<input type = "text" name="userName" value = "" maxlength="30" required><br>
-            <font size="2px">ユーザー名は大小文字のアルファベットと数字及び記号（._）のみ使用できます。</font><br><br>
+            ユーザー名　　　　　<input type = "text" name="userName" pattern="[A-Za-z0-9-_]*" value = "" maxlength="30" required><br>
+            <font size="2px">ユーザー名は大小文字のアルファベットと数字及び-(バー),_(アンダーバー)のみ使用できます。</font><br><br>
             <!--(SSLの準備ができてから開始) メールアドレス<input type="email" name="mailAd"><br>-->
-            パスワード　　　　　<input type = "password" name="userPassword" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br>
-            パスワード(再入力)　<input type = "password" name="userPassword2" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br>
-            <font size="2px">パスワードは大小文字のアルファベットと数字及び記号（._）のみ使用できます。</font><br>
-            <font color="red" size="3px">他サービスで使用中のパスワードは絶対に入力しないでください。</font>
+            パスワード　　　　　<input type = "password" name="userPassword" pattern="[A-Za-z0-9-_]*" value = "" maxlength="50" required><br>
+            パスワード(再入力)　<input type = "password" name="userPassword2" pattern="[A-Za-z0-9-_]*" value = "" maxlength="50" required><br>
+            <font size="2px">パスワードは大小文字のアルファベットと数字及び-(バー),_(アンダーバー)のみ使用できます。</font><br>
+            <font color="red" size="3px">他サービスで使用中のパスワードは絶対に入力しないでください。</font><br>
+            <font color="red" size="2px">パスワードはハッシュ化して保存していますが、ssl通信はしていません。</font><br>
+            
             <br>
-            <input type = "submit" name = "signin" value = "登録">
+            <input class = "submitButton" type = "submit" name = "signin" value = "登録">
         </form>
     </div>
 </body>

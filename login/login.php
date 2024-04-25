@@ -50,11 +50,12 @@ if(isset($_POST['login'])){
     <div class = "loginPanel">
         <h1>ログイン</h1>
         <form action="" method="POST">
-            ユーザー名 <input type = "text" name="userName" value = "" required><br>
-            パスワード <input type = "password" name="userPassword" value = "" required><br>
-            <input type = "submit" name = "login" value = "ログイン">
-        </form>
+            ユーザー名　　<input type = "text" name="userName" value = "" required><br>
+            パスワード　　<input type = "password" name="userPassword" value = "" required><br>
+            <input class = "submitButton" type = "submit" name = "login" value = "ログイン" >
+        </form><br>
         <a href = "signin.php">新規登録</a>
+        <a href = "../MainSite/Home.php">ログインせずに続ける</a>
         <!--<a href = "../userSettings/passReset.php"><font color="red">パスワードのリセットはこちら</font></a>-->
     </div>
     <font size = "8px" color = "White">

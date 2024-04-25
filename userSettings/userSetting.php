@@ -171,16 +171,16 @@ function hideMenu() {
         <hr>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <h3>ユーザー名変更</h3>
-            新しいユーザー名　　　　　<input type="text" name="newUserName" value="" maxlength="30" required>   <br>
-            <font size="2px">ユーザー名は大小文字のアルファベットと数字及び記号（._）のみ使用できます。</font><br>
+            新しいユーザー名　　　　　<input type="text" name="newUserName" pattern="[A-Za-z0-9-_]*" value="" maxlength="30" required>   <br>
+            <font size="2px">ユーザー名は大小文字のアルファベットと数字及び-(バー),_(アンダーバー)のみ使用できます。</font><br>
             <input type="submit" name="nameButton" value="変更">
         </form>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <h3>パスワード変更　　</h3>
             現在のパスワード　　　　　<input type="password" name="oldUserPassword" value=""><br><br>
-            新しいパスワード　　　　　<input type = "password" name="userPassword" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br>
+            新しいパスワード　　　　　<input type = "password" name="userPassword" pattern="[A-Za-z0-9.-_]*" value = "" maxlength="50" required><br>
             新しいパスワード(再入力)　<input type = "password" name="userPassword2" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br><br>
-            <font size="2px">パスワードは大小文字のアルファベットと数字及び記号（._）のみ使用できます。</font><br>
+            <font size="2px">パスワードは大小文字のアルファベットと数字及び-(バー),_(アンダーバー)のみ使用できます。</font><br>
             <font color="red" size="3px">他サービスで使用中のパスワードは絶対に入力しないでください。</font><br>
             <input type="submit" name="passButton" value="変更">
         </form>
@@ -191,7 +191,7 @@ function hideMenu() {
         <h2>表示</h2>
     </div>
     <h3>
-    <font color = "White">final commit:2024/04/24
+    <font color = "White">最終デプロイ:2024/04/25
     <?php echo("<br>USER ID:".$_SESSION['userID']);?>
     <br><br><a href="https://github.com/Ryuki0530/phpBBSwithAccountFunction" Style = "background-color: #f3eded;">このウェブサイトのリポジトリ</a>
     </font>

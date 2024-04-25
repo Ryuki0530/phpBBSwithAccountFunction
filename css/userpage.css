@@ -126,7 +126,9 @@ section .comment {
   color: #333;
   text-decoration: none;
 }
-
+a {
+  text-decoration: none;
+}
 
 /* スマホ用 */
 @media only screen and (max-width: 600px) {

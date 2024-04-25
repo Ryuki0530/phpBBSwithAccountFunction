@@ -20,10 +20,10 @@ try {
 session_start();
 
 //ログイン状況のチェック
-if (!isset($_SESSION['userName'])) {
-    header("Location: login.php");
+/*if (!isset($_SESSION['userName'])) {
+    header("Location: ../login/login.php");
     exit();
-}
+}*/ 
 
 //ログアウト処理
 if(isset($_POST['logout'])){
@@ -127,24 +127,37 @@ function mojiCount(textarea) {
 
 
 <body>
-<div class = "logo"><br>
-    <a href="Home.php"><img src="../images/icon/icon.png" width="30%" height="80%"><br></a>
+<div class = "logo">
+    <a href="Home.php"><img src="../images/icon/icon.png" ><br></a>
+            
         <div class = userInfo>
             <div class = "menu-container">
                 <span class="menu-text" onmouseover="showMenu()">
-                    <h3><?php echo($_SESSION['userName']);?></h3>
+                    <h3><?php
+                        if(!empty($_SESSION['userName'])){
+                            echo($_SESSION['userName']);
+                        }else{
+                            echo('<a href="../login/login.php" Style = ";"><font color="red">ログイン</font></a>');
+                        }
+                    ?></h3>
                 </span>
                 <div class="menu" onmouseleave="hideMenu()">
                 <ul>
                     <li>
-                        <a href="../userSettings/userSetting.php">ユーザー設定</a><hr>
-                        <a href="../login/logout.php"><font color="red">ログアウト</font></a>
+                        <?php
+                            if(!empty($_SESSION['userName'])){
+                                echo('<a href="userpage.php?user_ID='.$_SESSION['userID'].'">マイページ</a><hr>');
+                                echo('<a href="../userSettings/userSetting.php">ユーザー設定</a><hr>');
+                                echo(' <a href="../login/logout.php"><font color="red">ログアウト</font></a>');
+                            }
+                        ?>
                     <li>
                 <ul>
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <hr>
@@ -160,6 +173,7 @@ function mojiCount(textarea) {
     <div class="boardWrapper">
     
     <?php
+        if(!empty($_SESSION['userName'])){
         if($thisUserName == $_SESSION['userName']){
             echo('
             <form class="formWrapper" method="POST">
@@ -176,7 +190,7 @@ function mojiCount(textarea) {
             </form>
             <hr>
             ');
-        }
+        }}
     ?>
     
         <section>

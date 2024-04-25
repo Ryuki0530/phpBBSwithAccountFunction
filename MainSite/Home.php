@@ -20,10 +20,10 @@ try{
 session_start();
 
 //ログイン状況のチェック
-if (!isset($_SESSION['userName'])) {
+/*if (!isset($_SESSION['userName'])) {
     header("Location: ../login/login.php");
     exit();
-}
+}*/
 
 
 
@@ -41,10 +41,14 @@ if (!empty($_POST["submitButton"])) {
 
         $postDate = date("Y-m-d H:i:s");
         try {
-            $stmt = $pdo->prepare("INSERT INTO `bbstable` (`userID`,`userName`, `comment`, `postDate`) VALUES (:userID,:userName, :comment, :postDate)");
-
-            $stmt->bindParam(':userID',$_SESSION['userID'],PDO::PARAM_INT);
-            $stmt->bindParam(':userName', $_SESSION['userName'], PDO::PARAM_STR);
+            //ログイン時はユーザ―情報を登録
+            if (!isset($_SESSION['userName'])) {
+                $stmt = $pdo->prepare("INSERT INTO `bbstable` (`comment`, `postDate`) VALUES (:comment, :postDate)");
+            }else{
+                $stmt = $pdo->prepare("INSERT INTO `bbstable` (`userID`,`userName`, `comment`, `postDate`) VALUES (:userID,:userName, :comment, :postDate)");
+                $stmt->bindParam(':userID',$_SESSION['userID'],PDO::PARAM_INT);
+                $stmt->bindParam(':userName', $_SESSION['userName'], PDO::PARAM_STR);
+            }
             $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
             $stmt->bindParam(':postDate', $postDate, PDO::PARAM_STR);
 
@@ -119,14 +123,24 @@ function mojiCount(textarea) {
         <div class = userInfo>
             <div class = "menu-container">
                 <span class="menu-text" onmouseover="showMenu()">
-                    <h3><?php echo($_SESSION['userName']."");?></h3>
+                    <h3><?php
+                        if(!empty($_SESSION['userName'])){
+                            echo($_SESSION['userName']);
+                        }else{
+                            echo('<a href="../login/login.php" Style = ";"><font color="red">ログイン</font></a>');
+                        }
+                    ?></h3>
                 </span>
                 <div class="menu" onmouseleave="hideMenu()">
                 <ul>
                     <li>
-                        <?php echo('<a href="userpage.php?user_ID='.$_SESSION['userID'].'">マイページ</a>'); ?><hr>
-                        <a href="../userSettings/userSetting.php">ユーザー設定</a><hr>
-                        <a href="../login/logout.php"><font color="red">ログアウト</font></a>
+                        <?php
+                            if(!empty($_SESSION['userName'])){
+                                echo('<a href="userpage.php?user_ID='.$_SESSION['userID'].'">マイページ</a><hr>');
+                                echo('<a href="../userSettings/userSetting.php">ユーザー設定</a><hr>');
+                                echo(' <a href="../login/logout.php"><font color="red">ログアウト</font></a>');
+                            }
+                        ?>
                     <li>
                 <ul>
                 </div>
@@ -166,8 +180,12 @@ function mojiCount(textarea) {
                             
                             ?>
                             <p class="username"><?php
-                                $url = 'userpage.php?user_ID=' . $comment["userID"]; 
-                                echo ("　".'<a href="'.$url.'">'.$comment["userName"].'</a>');
+                                if(empty($comment['userID'])){
+                                    echo ("　ゲストユーザー");
+                                }else{
+                                    $url = 'userpage.php?user_ID=' . $comment["userID"]; 
+                                    echo ("　".'<a href="'.$url.'">'.$comment["userName"].'</a>');
+                                }
                             ?></p><hr><font size="2px">
                             <time><?php echo $comment["postDate"]; ?></time>
                             </font>
