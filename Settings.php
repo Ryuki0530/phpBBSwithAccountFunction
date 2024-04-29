@@ -1,6 +1,10 @@
 <?php
-    $db_host = 'localhost';
-    $db_name = 'bbsd';
-    $db_user = 'root';
+    //エントリーポイント
+    $db_host = '';
+    //データベース名
+    $db_name = '';
+    //ユーザー名
+    $db_user = '';
+    //パスワード
     $db_pass = '';
 ?>

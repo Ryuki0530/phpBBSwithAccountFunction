@@ -15,5 +15,12 @@ CREATE TABLE users(
     `password` VARCHAR(200) NOT NULL
 );
 
+CREATE TABLE fav(
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `masterID` INT(11) NOT NULL,
+    `userID` INT(11) NOT NULL
+);
+
+
 
 Settings.php内にDB関連のプロパティを入力してください。
