@@ -9,7 +9,7 @@ body {
 
   .signinPanel {
     border-radius: 30px 3px;
-    box-shadow: 0 8px 16px rgb(175, 205, 215);
+    box-shadow: 0 20px 500px rgb(255, 255, 255);
     display: flex; /* 要素を横並びにする */
     flex-direction: column; /* 要素を縦並びにする */
     justify-content: center; /* 縦方向（列方向）に中央寄せ */
@@ -24,7 +24,7 @@ body {
     margin: 0 auto;
 }
 
-.submitButton {
+.submitButton { 
     border-radius: 10px;
     background-color: #d8ecf7;
     width: 30%;
@@ -32,7 +32,7 @@ body {
 
 .loginPanel {
     border-radius: 30px 3px;
-    box-shadow: 0 8px 16px rgb(175, 205, 215);
+    box-shadow: 0 20px 500px rgb(148, 227, 254);
     display: flex; /* 要素を横並びにする */
     flex-direction: column; /* 要素を縦並びにする */
     justify-content: center; /* 縦方向（列方向）に中央寄せ */
@@ -42,8 +42,33 @@ body {
 
     border: ridge 1px rgb(0, 0, 0); 
     background-color: rgb(255, 255, 255);
-    width: 600px; /* 四角の幅を300pxに設定 */
+    width: 400px; /* 四角の幅を300pxに設定 */
     height: 350px; /* 四角の高さを200pxに設定 */
     margin: 0 auto;
 }
 
+
+/* スマホ用 */
+@media only screen and (max-width: 600px) {
+    body{
+      width: 100vw;
+      height: 100vh;
+      
+    background-attachment: fixed;
+    margin: 0;
+    transform: scale(2, 1);
+    }
+    .boardWrapper {
+      background-color: #f3eded;
+      padding: 20px;
+      max-width: 300px;
+      margin: 0 auto;
+      border: 1px solid black;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 16px rgb(175, 205, 215); /
+    }
+    .logo img{
+      width:20%; 
+      height:80%;
+    }
+  }

@@ -49,6 +49,21 @@ a {
   box-shadow: 0 8px 16px rgb(175, 205, 215); /* 影を追加する */
 }
 
+.fav{
+  font-size: large;
+}
+
+.favButton {
+  border-radius: 10px;
+  background-color: #f8def3;
+  width: 3%;
+}
+.refavButton {
+  border-radius: 10px;
+  background-color: #ff4fdf;
+  width: 3%;
+}
+
 .submitButton{
   border-radius: 10px;
   background-color: #e4f7d8;

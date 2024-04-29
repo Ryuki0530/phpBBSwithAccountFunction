@@ -171,15 +171,15 @@ function hideMenu() {
         <hr>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <h3>ユーザー名変更</h3>
-            新しいユーザー名　　　　　<input type="text" name="newUserName" pattern="[A-Za-z0-9-_]*" value="" maxlength="30" required>   <br>
+            新しいユーザー名　　　　　<input type="text" name="newUserName" value="" maxlength="30" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '');"><br>
             <font size="2px">ユーザー名は大小文字のアルファベットと数字及び-(バー),_(アンダーバー)のみ使用できます。</font><br>
             <input type="submit" name="nameButton" value="変更">
         </form>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <h3>パスワード変更　　</h3>
             現在のパスワード　　　　　<input type="password" name="oldUserPassword" value=""><br><br>
-            新しいパスワード　　　　　<input type = "password" name="userPassword" pattern="[A-Za-z0-9.-_]*" value = "" maxlength="50" required><br>
-            新しいパスワード(再入力)　<input type = "password" name="userPassword2" pattern="[A-Za-z0-9._]*" value = "" maxlength="50" required><br><br>
+            新しいパスワード　　　　　<input type = "password" name="userPassword"  value = "" maxlength="50" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '');"><br>
+            新しいパスワード(再入力)　<input type = "password" name="userPassword2"  value = "" maxlength="50" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '');"><br><br>
             <font size="2px">パスワードは大小文字のアルファベットと数字及び-(バー),_(アンダーバー)のみ使用できます。</font><br>
             <font color="red" size="3px">他サービスで使用中のパスワードは絶対に入力しないでください。</font><br>
             <input type="submit" name="passButton" value="変更">

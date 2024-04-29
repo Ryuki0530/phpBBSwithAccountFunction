@@ -64,7 +64,8 @@ if (!empty($_POST["submitButton"])) {
     }
 }
 
-//DBからのデータ取得
+
+//DBからの投稿取得
 $sql = "SELECT `id`, `userID`, `userName`, `comment`, `postDate` FROM `bbstable` ORDER BY `postDate` DESC;";
 $commentArray = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
@@ -80,8 +81,6 @@ foreach ($commentArray as &$comment) {
 unset($comment);
 
 
-//DB接続終了
-$pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -176,9 +175,6 @@ function mojiCount(textarea) {
                 <article>
                     <div class="wrapper">
                         <div class="nameArea">
-                            <?php
-                            
-                            ?>
                             <p class="username"><?php
                                 if(empty($comment['userID'])){
                                     echo ("　ゲストユーザー");
@@ -188,10 +184,48 @@ function mojiCount(textarea) {
                                 }
                             ?></p><hr><font size="2px">
                             <time><?php echo $comment["postDate"]; ?></time>
+                            
                             </font>
 
                         </div>
-                        <p class="comment"><?php echo $comment["comment"]; ?></p>
+                        <p class="comment"><?php echo $comment["comment"]; ?><hr>
+                            <div class = PostTag>
+                                <?php
+                                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM `fav` WHERE `masterID` = :mid AND `userID` = :usid");
+                                    $stmt->bindParam(':mid',$comment["id"],PDO::PARAM_INT);
+                                    $stmt->bindParam(':usid',$_SESSION["userID"],PDO::PARAM_INT);
+                                    $stmt->execute();
+                                    $favCount = $stmt->fetchColumn();
+                                ?>
+                                <form method="POST">
+                                <input type="hidden" name="postId" value="<?php echo $comment["id"]; ?>">
+                                <?php
+                                    if(!empty($_SESSION["userName"])){
+                                        if($favCount == 0){
+                                            echo('<input class = "favButton" type="submit" value="♡" name="favButton">');
+                                        }if($favCount == 1){
+                                            echo('<input class = "refavButton" type="submit" value="♡" name="refavButton">');
+                                        }
+                                    }else{
+                                        echo('<input class = "favButton" type="button"  value="♡" disabled>');
+                                    }
+                                ?>
+                                
+                                <?php
+                                $stmt = $pdo->prepare("SELECT COUNT(*) FROM `fav` WHERE `masterID` = :mid");
+                                $stmt->bindParam(':mid',$comment["id"],PDO::PARAM_INT);
+                                $stmt->execute();
+                                $favCount = $stmt->fetchColumn();
+                                echo(":".$favCount);
+                                if(empty($_SESSION['userID'])){
+                                }
+                                
+                                ?>
+                                </form>
+                                
+                                
+                            </div>
+                        </p>
                     </div>
                 </article>
                 <hr>
@@ -209,4 +243,64 @@ function mojiCount(textarea) {
 
 </html>
 
+<?php
 
+//いいね機能
+//いいねデータ作成
+if (!empty($_POST["favButton"])){
+    
+    
+
+    $postID = $_POST["postId"];
+    //echo('<script>alert($postID);</script>');
+    try{
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM `fav` WHERE `masterID` = :mid AND `userID` = :usid");
+        $stmt->bindParam(':mid',$postID,PDO::PARAM_INT);
+        $stmt->bindParam(':usid',$_SESSION["userID"],PDO::PARAM_INT);
+        $stmt->execute();
+        $favCount = $stmt->fetchColumn();
+        if($favCount == 0){
+            $stmt = $pdo->prepare("INSERT INTO `fav` (`masterID`, `userID`) VALUES (:mid, :usid)");
+            $stmt->bindParam(':mid',$postID,PDO::PARAM_INT);
+            $stmt->bindParam(':usid',$_SESSION["userID"],PDO::PARAM_INT);
+            $stmt->execute();
+            //リダイレクト処理
+            
+            echo('<script>location.reload();</script>');
+        
+            exit(); 
+        }
+    
+
+    }catch (PDOException $e) {
+        echo $e->getMessage();
+
+    }
+}
+//いいねデータ削除
+if (!empty($_POST["refavButton"])){
+
+    $postID = $_POST["postId"];
+    //echo('<script>alert($postID);</script>');
+    try{
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM `fav` WHERE `masterID` = :mid AND `userID` = :usid");
+        $stmt->bindParam(':mid',$postID,PDO::PARAM_INT);
+        $stmt->bindParam(':usid',$_SESSION["userID"],PDO::PARAM_INT);
+        $stmt->execute();
+        $favCount = $stmt->fetchColumn();
+        if($favCount == 1){
+
+            $stmt = $pdo->prepare("DELETE FROM `fav` WHERE `masterID` = :mid AND `userID` = :usid");
+            $stmt->bindParam(':mid',$postID,PDO::PARAM_INT);
+            $stmt->bindParam(':usid',$_SESSION["userID"],PDO::PARAM_INT);
+            $stmt->execute();
+            //リダイレクト処理
+            echo('<script>location.reload();</script>');
+            exit();
+        }
+    }catch (PDOException $e) {
+        echo $e->getMessage();
+
+    }
+}
+?>
